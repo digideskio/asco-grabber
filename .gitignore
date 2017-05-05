@@ -1,0 +1,6 @@
+# exclude cpython bytecode files
+*.pyc
+
+# exclude personal IDE settings
+.idea/workspace.xml
+.idea/tasks.xml
