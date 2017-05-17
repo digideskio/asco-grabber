@@ -12,17 +12,17 @@ class ApiUrl:
     MAX_ROWS_PER_PAGE = 6
 
     def __init__(self, base_api_url: str, start_from: int = 0):
-        self.base_api_url = base_api_url
-        self.start_from = start_from
+        self._base_api_url = base_api_url
+        self._start_from = start_from
         self.rows_per_page = self.MAX_ROWS_PER_PAGE
 
     def __str__(self):
         params = '?rows={rows_per_page}&start={start_from}'.format(
             rows_per_page=self.rows_per_page,
-            start_from=self.start_from
+            start_from=self._start_from
         )
 
-        return self.base_api_url + params
+        return self._base_api_url + params
 
 
 class DataSource:
