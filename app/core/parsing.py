@@ -40,13 +40,17 @@ class DataSource:
     ):
         self._base_api_url = base_api_url
         self._current_position = current_position
-        self.total_elements = total_elements
+        self._total_elements = total_elements
+
+    @property
+    def total_elements(self):
+        return self._total_elements
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        if self._current_position >= self.total_elements:
+        if self._current_position >= self._total_elements:
             raise StopIteration()
 
         url = ApiUrl(self._base_api_url, self._current_position)
