@@ -39,7 +39,7 @@ $ python console.py grab_data --help
 Usage: console.py grab_data [OPTIONS]
 
 Options:
-  --base-api-url TEXT  Base URL of the API to grab the data from
+  --base-api-url TEXT  Base URL of the API to grab the data from.
   --help               Show this message and exit.
 ```
 

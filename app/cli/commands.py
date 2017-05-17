@@ -12,7 +12,7 @@ from ..core.convertation import V1DataConverter
 @click.option(
     '--base-api-url',
     default=config.base_api_url,
-    help='Base URL of the API to grab the data from',
+    help='Base URL of the API to grab the data from.',
 )
 @click.pass_context
 def grab_data(context, base_api_url: str):
