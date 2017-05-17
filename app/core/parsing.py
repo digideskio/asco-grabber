@@ -27,7 +27,7 @@ class ApiUrl:
 
 class DataSource:
     @classmethod
-    def make_from(cls, base_api_url):
+    def make_from(cls, base_api_url: str):
         url = ApiUrl(base_api_url)
         total_elements = ApiParser.get_total_sessions_count(str(url))
         return cls(base_api_url, 0, total_elements)

@@ -2,10 +2,10 @@ from datetime import datetime
 
 
 class DataConverter:
-    def get_header(self):
+    def get_header(self) -> list:
         raise NotImplementedError()
 
-    def convert_item(self, item: dict):
+    def convert_item(self, item: dict) -> dict:
         raise NotImplementedError()
 
 
@@ -114,5 +114,5 @@ class V1DataConverter(DataConverter):
         dt = self._parse_datetime(string)
         return dt.strftime('%I:%M%p')
 
-    def _parse_datetime(self, value) -> datetime:
+    def _parse_datetime(self, value: str) -> datetime:
         return datetime.strptime(value, '%Y-%m-%dT%H:%M:%S')

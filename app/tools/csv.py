@@ -3,7 +3,7 @@ import io
 
 
 class CSV:
-    def __init__(self, field_names, render_header=True):
+    def __init__(self, field_names: list, render_header: bool = True):
         self._field_names = field_names
         self._render_header = render_header
         self._rows = []
