@@ -14,11 +14,15 @@ class ApiUrl:
     def __init__(self, base_api_url: str, start_from: int = 0):
         self._base_api_url = base_api_url
         self._start_from = start_from
-        self.rows_per_page = self.MAX_ROWS_PER_PAGE
+        self._rows_per_page = self.MAX_ROWS_PER_PAGE
+
+    @property
+    def rows_per_page(self):
+        return self._rows_per_page
 
     def __str__(self):
         params = '?rows={rows_per_page}&start={start_from}'.format(
-            rows_per_page=self.rows_per_page,
+            rows_per_page=self._rows_per_page,
             start_from=self._start_from
         )
 
