@@ -29,21 +29,30 @@ class ApiUrl:
         return self._base_api_url + params
 
 
+class HttpJsonClient:
+    def get(self, url: str) -> dict:
+        raise NotImplementedError()
+
+
+class RequestsHttpJsonClient(HttpJsonClient):
+    def get(self, url: str) -> dict:
+        response = requests.get(url)
+        return response.json()
+
+
 class ApiParser:
     FIELD_TOTAL_COUNT = 'Total'
     FIELD_SESSIONS_CONTAINER = 'Sessions'
 
-    @staticmethod
-    def _get_json_from_url(full_url: str) -> dict:
-        response = requests.get(full_url)
-        return response.json()
+    def __init__(self, http_json_client: HttpJsonClient):
+        self._http_json_client = http_json_client
 
     def get_sessions(self, full_url: str) -> list:
-        json_response = self._get_json_from_url(full_url)
+        json_response = self._http_json_client.get(full_url)
         return json_response[self.FIELD_SESSIONS_CONTAINER]
 
     def get_total_sessions_count(self, full_url: str) -> int:
-        json_response = self._get_json_from_url(full_url)
+        json_response = self._http_json_client.get(full_url)
         return json_response[self.FIELD_TOTAL_COUNT]
 
 

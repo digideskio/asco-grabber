@@ -3,7 +3,7 @@ import click
 from .commands import generate_csv, grab_data, print_stored_data
 from .helpers import put_application_instance_into_context
 from ..core.application import Application
-from ..core.parsing import ApiParser
+from ..core.parsing import ApiParser, RequestsHttpJsonClient
 from ..core.storage import JSONFileStorage
 
 
@@ -23,7 +23,10 @@ class CLI:
         @click.pass_context
         def entrypoint(context, storage_file):
             put_application_instance_into_context(
-                Application(JSONFileStorage(storage_file), ApiParser()),
+                Application(
+                    JSONFileStorage(storage_file),
+                    ApiParser(RequestsHttpJsonClient())
+                ),
                 context,
             )
 
