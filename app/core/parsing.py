@@ -29,11 +29,29 @@ class ApiUrl:
         return self._base_api_url + params
 
 
+class ApiParser:
+    FIELD_TOTAL_COUNT = 'Total'
+    FIELD_SESSIONS_CONTAINER = 'Sessions'
+
+    @staticmethod
+    def _get_json_from_url(full_url: str) -> dict:
+        response = requests.get(full_url)
+        return response.json()
+
+    def get_sessions(self, full_url: str) -> list:
+        json_response = self._get_json_from_url(full_url)
+        return json_response[self.FIELD_SESSIONS_CONTAINER]
+
+    def get_total_sessions_count(self, full_url: str) -> int:
+        json_response = self._get_json_from_url(full_url)
+        return json_response[self.FIELD_TOTAL_COUNT]
+
+
 class DataSource:
     @classmethod
-    def make_from(cls, base_api_url: str):
+    def make_from(cls, base_api_url: str, api_parser: ApiParser):
         url = ApiUrl(base_api_url)
-        total_elements = ApiParser.get_total_sessions_count(str(url))
+        total_elements = api_parser.get_total_sessions_count(str(url))
         return cls(base_api_url, 0, total_elements)
 
     def __init__(
@@ -62,23 +80,3 @@ class DataSource:
         self._current_position += url.rows_per_page
 
         return str(url)
-
-
-class ApiParser:
-    FIELD_TOTAL_COUNT = 'Total'
-    FIELD_SESSIONS_CONTAINER = 'Sessions'
-
-    @classmethod
-    def _get_json_from_url(cls, full_url: str) -> dict:
-        response = requests.get(full_url)
-        return response.json()
-
-    @classmethod
-    def get_sessions(cls, full_url: str) -> list:
-        json_response = cls._get_json_from_url(full_url)
-        return json_response[cls.FIELD_SESSIONS_CONTAINER]
-
-    @classmethod
-    def get_total_sessions_count(cls, full_url: str) -> int:
-        json_response = cls._get_json_from_url(full_url)
-        return json_response[cls.FIELD_TOTAL_COUNT]

@@ -5,15 +5,16 @@ from ..tools.csv import CSV
 
 
 class Application:
-    def __init__(self, storage: Storage):
+    def __init__(self, storage: Storage, api_parser: ApiParser):
         self._storage = storage
+        self._api_parser = api_parser
 
     def grab_data(self, base_api_url: str, progress_callback: callable = None):
         data = []
 
-        data_source = DataSource.make_from(base_api_url)
+        data_source = DataSource.make_from(base_api_url, self._api_parser)
         for url in data_source:
-            chunk_of_data = ApiParser.get_sessions(url)
+            chunk_of_data = self._api_parser.get_sessions(url)
             data += chunk_of_data
 
             if progress_callback is not None:
